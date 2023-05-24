@@ -22,6 +22,7 @@ function log(message) {
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext("2d");
     log("Generating image...");
+    const startTime = Date.now();
     for (let i = 0; i < width * height; i++) {
         const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         const x = Math.floor(i % height);
@@ -32,7 +33,8 @@ function log(message) {
         ctx.fillStyle = color;
         ctx.fillRect(x, y, 1, 1);
     }
+    const saveTime = Date.now();
     log(`Done! Saving to ${resolve(__dirname, "image.png")}...`);
     writeFileSync(resolve(__dirname, "image.png"), canvas.toBuffer());
-    log(`Saved to ${resolve(__dirname, "image.png")}!`);
+    log(`Saved to ${resolve(__dirname, "image.png")}! Took ${Math.round((saveTime - startTime) / 1000)} seconds to create and ${Math.round((Date.now() - saveTime) / 1000)} seconds to save`);
 })();
